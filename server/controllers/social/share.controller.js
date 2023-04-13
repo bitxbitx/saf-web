@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Share = require('../models/social/share.model');
+const Share = require('../../models/social/share.model');
 
 const createShare = asyncHandler(async (req, res) => {
     const userId = req.userId;

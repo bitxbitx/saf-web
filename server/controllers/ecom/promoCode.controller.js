@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const PromoCode = require('../models/ecom/promoCode.model');
+const PromoCode = require('../../models/ecom/promoCode.model');
 
 const createPromoCode = asyncHandler(async (req, res) => {
     const promoCode = new PromoCode(req.body);

@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
-const Admin = require('../models/adminModel');
 const { signAccessToken, signRefreshToken, verifyRefreshToken, verifyAccessToken } = require('../config/jwtHelper');
 
 const protect = async (req, res, next) => {
@@ -35,4 +33,4 @@ const protect = async (req, res, next) => {
     }
 }
 
-module.exports = { protect, admin, customerProtect };
+module.exports = { protect };

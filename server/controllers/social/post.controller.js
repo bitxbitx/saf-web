@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Post = require('../models/social/post.model');
+const Post = require('../../models/social/post.model');
 
 const createPost = asyncHandler(async (req, res) => {
     const userId = req.userId;

@@ -71,7 +71,7 @@ const register = asyncHandler(async (req, res) => {
  * @param {Object} res - The response object.
  * @returns {Object} A success message indicating that the password reset link has been sent.
  */
-const sendPasswordResetLink = asyncHandler(async (req, res) => {
+const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -129,13 +129,12 @@ const resetPassword = asyncHandler(async (req, res) => {
  * @access Private
  * @description This route is used to logout the user by destroying their session.
     */
-const logout = (req, res) => {
+const logout = asyncHandler(async (req, res) => {
     // remove all cookie
     res.clearCookie('refreshToken');
     res.clearCookie('accessToken');
     res.json({ message: 'Logged out successfully' });
-}
-
+});
 
 const refreshTokens = asyncHandler(async (req, res) => {
     const { refreshToken } = req.body;
@@ -165,12 +164,34 @@ const refreshTokens = asyncHandler(async (req, res) => {
     }
 });
 
+const getMe = asyncHandler(async (req, res) => {
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        res.status(404).json({ error: 'User not found' });
+    } else {
+        res.json({ user });
+    }
+});
+
+const updateDetails = asyncHandler(async (req, res) => {    
+    const user = await User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    if (!user) {
+        res.status(404).json({ error: 'User not found' });
+    } else {
+        res.json({ user });
+    }
+});
+
 
 module.exports = {
     login,
     register,
-    sendPasswordResetLink,
+    forgotPassword,
     resetPassword,
     logout,
     refreshTokens,
+    getMe,
+    updateDetails,
 };

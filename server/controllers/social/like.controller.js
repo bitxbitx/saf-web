@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Like = require('../models/social/like.model');
+const Like = require('../../models/social/like.model');
 
 const createLike = asyncHandler(async (req, res) => {
     const userId = req.userId;

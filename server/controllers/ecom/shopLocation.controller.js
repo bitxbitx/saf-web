@@ -1,5 +1,5 @@
-import asyncHandler from 'express-async-handler';
-import ShopLocation from '../models/ecom/shopLocation.model.js';
+const asyncHandler = require('express-async-handler');
+const ShopLocation = require('../../models/ecom/shopLocation.model');
 
 const createShopLocation = asyncHandler(async (req, res) => {
     const shopLocation = new ShopLocation(req.body);
@@ -27,4 +27,4 @@ const deleteShopLocation = asyncHandler(async (req, res) => {
     res.json({ message: 'Shop location removed' });
 });
 
-export { createShopLocation, getShopLocations, getShopLocation, updateShopLocation, deleteShopLocation };
+module.exports = { createShopLocation, getShopLocations, getShopLocation, updateShopLocation, deleteShopLocation };

@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const AddToCart = require('../models/ecom/addToCart.model');
+const AddToCart = require('../../models/ecom/addToCart.model');
 
 const addToCart = asyncHandler(async (req, res) => {
     const { productId, quantity } = req.body;
@@ -34,4 +34,4 @@ const getCart = asyncHandler(async (req, res) => {
     res.json({ cart });
 });
 
-module.exports = { addToCart };
+module.exports = { addToCart, removeFromCart, getCart };

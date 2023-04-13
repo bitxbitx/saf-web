@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Product = require('../models/ecom/product.model');
+const Product = require('../../models/ecom/product.model');
 
 const createProduct = asyncHandler(async (req, res) => {
     const product = new Product(req.body);
