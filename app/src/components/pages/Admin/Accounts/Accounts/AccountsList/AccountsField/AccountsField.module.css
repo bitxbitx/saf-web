@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.end {
+  margin-left: auto;
+}
+
+.gapSmall {
+  width: 20vw;
+}

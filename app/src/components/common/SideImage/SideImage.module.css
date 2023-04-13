@@ -1,0 +1,15 @@
+.background {
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #3c9edf;
+  margin: 0;
+}
+
+.background img {
+  width: 90%;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}

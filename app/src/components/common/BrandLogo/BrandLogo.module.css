@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.container p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 92%;
+  letter-spacing: -0.408px;
+  color: #ffffff;
+  margin: 0
+}
