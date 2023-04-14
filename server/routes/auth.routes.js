@@ -6,9 +6,9 @@ const { login, register, getMe, forgotPassword, resetPassword, updateDetails, lo
 router.route('/login').post(login)
 router.route('/register').post(register)
 router.route('/me').get(protect, getMe)
-router.route('/forgotpassword').post(forgotPassword)
-router.route('/resetpassword/:resettoken').put(resetPassword)
-router.route('/updatedetails').put(protect, updateDetails)
+router.route('/forgot-password').post(forgotPassword)
+router.route('/reset-password/:resettoken').put(resetPassword)
+router.route('/update-details').put(protect, updateDetails)
 router.route('/logout').get(protect, logout)
 
 module.exports = router

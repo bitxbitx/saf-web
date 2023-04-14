@@ -8,11 +8,6 @@ import { Route } from "react-router-dom";
 
 const Landing = (props) => {
 
-  // useEffect(() => {
-  //   try {
-
-
-
   return (
     <div className={styles.col}>
       <div className={styles.container}>

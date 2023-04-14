@@ -5,15 +5,10 @@ import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import AddIcon from "../../../../../assets/icons/Add.svg";
 import Button from "../../../../common/Button/Button";
 import Heading from "../../../../common/Heading/Heading";
-import { useGetAdminQuery } from "../../../../../feature/services/admin";
-import { useGetCustomerQuery } from "../../../../../feature/services/customer";
 import AccountsList from "./AccountsList/AccountsList";
 
 const Accounts = (props) => {
-  const { data: adminData, isError: adminIsError, error: adminError, isLoading: adminIsLoading } = useGetAdminQuery();
-  const { data: customerData, isError: customerIsError, error: customerError, isLoading: customerIsLoading } = useGetCustomerQuery();
 
-  console.log(adminData);
   return (
     <div className={styles.container}>
       <Heading
@@ -29,7 +24,7 @@ const Accounts = (props) => {
           fontWeight="500"
         />
       </Heading>
-      {adminError && (
+      {/* {adminError && (
         <Snackbar open={adminIsError} autoHideDuration={6000}>
           <Alert severity="success" sx={{ width: "100%" }}>
             {adminError.toString()}
@@ -42,7 +37,7 @@ const Accounts = (props) => {
             {customerError.toString()}
           </Alert>
         </Snackbar>
-      )}
+      )} */}
       {/* {adminIsLoading || customerIsLoading ? (
         <CircularProgress color="#000000" />
       ) : (

@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Box, Collapse, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useLoginMutation } from "../../../../feature/services/auth";
+import { useLoginMutation } from "../../../../feature/services/auth/auth.services";
 import Button from "../../../common/Button/Button";
 import ForgotPassword from "../../../common/Button/ForgotPassword/ForgotPassword";
 import Heading from "../../../common/Heading/Heading";

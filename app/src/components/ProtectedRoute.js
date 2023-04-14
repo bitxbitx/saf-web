@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom'
-import { useCheckLoginQuery } from '../feature/services/auth';
+import { useMeQuery } from '../feature/services/auth/auth.services';
 
 const ProtectedRoute =  ({ children,  ...rest }) => {
-    const {  data , isLoading } = useCheckLoginQuery();
-    const isLoggedIn = data?.isLoggedIn;
+    const {  data , isLoading } = useMeQuery();
+    const isLoggedIn = data.user ? true : false;
 
     // TODO : implement a loading screen
     return (
