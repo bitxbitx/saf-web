@@ -17,7 +17,7 @@ const orderSchema = Schema(
         },
         orderItems: [{
             type: Schema.Types.ObjectId,
-            ref: "Product",
+            ref: "ProductVariant",
             required: true,
         }],
         totalPrice: {

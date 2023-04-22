@@ -7,10 +7,13 @@ const productCategorySchema = Schema(
             type: String,
             required: [true, "Please add a name for this catergory"]
         },
-        descriptione: {
+        description: {
             type: String,
-            required: [true, "Please add a description for this catergory"]
-        }
+            default: ""
+        },
+        image: {
+            type: String,
+        },
     },
     {
         timestamps: true,

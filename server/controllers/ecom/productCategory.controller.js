@@ -2,7 +2,9 @@ const asyncHandler = require('express-async-handler');
 const ProductCategory = require('../../models/ecom/productCategory.model');
 
 const createProductCategory = asyncHandler(async (req, res) => {
-    const productCategory = new ProductCategory(req.body);
+    // Handle image upload
+    if (req.file) { req.body.image = req.file.path }
+    const productCategory = new ProductCategory( {...req.body });
     await productCategory.save();
     res.json({ productCategory });
 });
@@ -18,7 +20,13 @@ const getProductCategory = asyncHandler(async (req, res) => {
 });
 
 const updateProductCategory = asyncHandler(async (req, res) => {
-    const productCategory = await ProductCategory.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    // Handle image upload
+    if (req.file) { req.body.image = req.file.path }
+    const productCategory = await ProductCategory.findOneAndUpdate(
+        { _id: req.params.id }, 
+        {...req.body },
+         { new: true }
+         );
     res.json({ productCategory });
 });
 

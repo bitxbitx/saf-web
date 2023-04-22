@@ -1,14 +1,32 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user.model');
+const mongoose = require('mongoose');
 
 const getUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.params.id);
     res.json({ user });
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-    const user = await User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
-    res.json({ user });
+    try {
+        if (req.file) { req.body.image = req.file.path }
+        const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })                
+        res.json({ user });
+    } catch (error) {
+        // Check if the error is a validation error
+        if (error instanceof mongoose.Error.ValidationError) {
+            const errors = Object.values(error.errors).map((err) => err.message);
+            return res.status(400).json({ error: errors });
+        }
+
+        // If duplicate key error return a simple message
+        if (error.code === 11000) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        // If any other error return the full error
+        res.status(500).json({ error: error.message });
+    }
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -22,9 +40,28 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 const createUser = asyncHandler(async (req, res) => {
-    const user = new User(req.body);
-    await user.save();
-    res.json({ user });
-});
+    try {
+      // Handle image upload
+      if (req.file) { req.body.image = req.file.path }
+      const user = new User({ ...req.body });
+      await user.save();
+      res.json({ user });
+    } catch (error) {
+      // Check if the error is a validation error
+      if (error instanceof mongoose.Error.ValidationError) {
+        const errors = Object.values(error.errors).map((err) => err.message);
+        return res.status(400).json({ error: errors });
+      }
+  
+      // If duplicate key error return a simple message
+      if (error.code === 11000) {
+        return res.status(400).json({ error: 'User already exists' });
+      }
+  
+      // If any other error return the full error
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
 
 module.exports = { getUser, updateUser, deleteUser, getUsers, createUser };

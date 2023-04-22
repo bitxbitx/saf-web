@@ -6,44 +6,62 @@ const promoCodeSchema = Schema(
     {
         code: {
             type: String,
-            required: true,
+            required: [true, 'Please add a code for this promo code'],
         },
-        discount: {
+        discountAmount: {
             type: Number,
-            required: true,
+            required: [true, 'Please add a discount amount for this promo code'],
         },
-        expiryDate: {
+        startDate: {
             type: Date,
-            required: true,
+            required: [true, 'Please add a start date for this promo code']
         },
+        endDate: Date,
         status: {
             type: String,
-            required: true,
+            required: [true, 'Please add a status for this promo code'],
+            enum: ['active', 'inactive']
         },
-        type: {
+        discountType: {
             type: String,
-            required: true,
-            enum: ['Percentage', 'Fixed']
+            required: [true, 'Please add a type for this promo code'],
+            enum: ['percentage', 'fixed']
         },
-        category: [{
+        productCategory: [{
             type: Schema.Types.ObjectId,
             ref: "ProductCategory"
         }],
-        maxNumebrOfUses: {
-            type: Number,
-            required: true,
-        },
-        numberOfUses: {
-            type: Number,
-            required: true,
-        },
-        description: {
-            type: String,
-        }
+        maxNumebrOfUses: Number,
+        description: String,
+        minPurchaseAmount: Number,
+        maxDiscountAmount: Number,
+        maxUsesPerUser: Number,
     },
     {
         timestamps: true
     }
 )
+
+promoCodeSchema.virtual('numberOfUses', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'promoCode',
+    count: true
+})
+
+promoCodeSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'productCategory',
+        select: 'name'
+    }).populate({
+        path: 'numberOfUses',
+    })
+
+    if (this.numberOfUses > this.maxNumebrOfUses) {
+        this.status = 'inactive'
+    }
+
+    next()
+})
 
 module.exports = mongoose.model("PromoCode", promoCodeSchema)

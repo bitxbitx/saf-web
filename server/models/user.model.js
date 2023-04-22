@@ -13,23 +13,31 @@ const userSchema = mongoose.Schema(
             required: [true, 'Please add a email value'],
             unique: true,
         },
+        username: {
+            type: String,
+            required: [true, 'Please add a username value'],
+            unique: true,
+        },
         password: {
             type: String,
             required: [true, 'Please add a password value']
         },
         role: {
             type: String,
-            enum: ['admin', 'user'],
+            enum: ['admin', 'user', 'customer'],
             default: 'user'
         },
         dob: Date,
-        age: Number,
         ethnicity: String,
         phoneNumber: {
             type: String,
-            required: [true, 'Please add a phoneNumber value']
+            required: [true, 'Please add a phoneNumber value'],
+            unique: true,
         },
         address: String,
+        image: {
+            type: String,
+        },
         points: {
             type: Number,
             default: 0,
@@ -75,13 +83,22 @@ userSchema.virtual('cart', {
 })
 
 userSchema.virtual('wishList', {
-    ref: 'WishList',
+    ref: 'Wishlist',
     localField: '_id',
     foreignField: 'user',
     justOne: false,
 })
 
-userSchema
+userSchema.virtual('age').get(function () {
+    const today = new Date()
+    const birthDate = new Date(this.dob)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const m = today.getMonth() - birthDate.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--
+    }
+    return age
+})
 
 userSchema.pre(/^find/, function (next) {
     this.populate({

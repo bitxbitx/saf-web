@@ -11,16 +11,6 @@ const twitterRwClient = twitter.readWrite;
 
 module.exports = twitterRwClient;
 
-// const tweet = async (req, res) => {
-//     try {
-//         await twitterRwClient.v2.tweet('Hello World!');
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
-
-// tweet();
-
 const v2Client = twitterRwClient.v2;
 
 const timeline = async () => {

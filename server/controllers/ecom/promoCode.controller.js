@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const PromoCode = require('../../models/ecom/promoCode.model');
+const ProductCategory = require('../../models/ecom/productCategory.model');
 
 const createPromoCode = asyncHandler(async (req, res) => {
     const promoCode = new PromoCode(req.body);
@@ -18,7 +19,8 @@ const getPromoCode = asyncHandler(async (req, res) => {
 });
 
 const updatePromoCode = asyncHandler(async (req, res) => {
-    const promoCode = await PromoCode.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    console.log("req.body", req.body)
+    const promoCode = await PromoCode.findOneAndUpdate({ _id: req.params.id }, req.body.payload, { new: true });
     res.json({ promoCode });
 });
 

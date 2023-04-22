@@ -16,19 +16,15 @@ const ShopLocationSchema = mongoose.Schema(
         },
         address: {
             type: String,
-            required: [true, 'Please add a address value']
         },
         phoneNumber: {
             type: String,
-            required: [true, 'Please add a phoneNumber value']
         },
         email: {
             type: String,
-            required: [true, 'Please add a email value']
         },
         openingHours: {
             type: String,
-            required: [true, 'Please add a openingHours value']
         },
     },
     {

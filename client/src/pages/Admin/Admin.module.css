@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    width: 100vw;
+}
+
+.content {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 40px;
+    max-height: 100vh;
+    box-sizing: border-box;
+    overflow: auto;
+    height: 100vh;
+}
+
+@media (max-width: 768px) {
+    .container {
+        /* flex-direction: column; */
+        justify-content: flex-start;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}

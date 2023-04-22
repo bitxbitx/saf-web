@@ -14,11 +14,11 @@ const getShopLocations = asyncHandler(async (req, res) => {
 
 const getShopLocation = asyncHandler(async (req, res) => {
     const shopLocation = await ShopLocation.findById(req.params.id);
-    res.json({ ShopLocation });
+    res.json({ shopLocation });
 });
 
 const updateShopLocation = asyncHandler(async (req, res) => {
-    const shopLocation = await ShopLocation.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    const shopLocation = await ShopLocation.findOneAndUpdate({ _id: req.params.id }, req.body.payload, { new: true });
     res.json({ shopLocation });
 });
 

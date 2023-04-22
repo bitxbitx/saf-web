@@ -1,0 +1,50 @@
+.container {
+    height: 100vh;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    background-color: black;
+    flex: 0 0 auto;
+  }
+  
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .css-wljo3u {
+    border-color: #1db954 !important;
+  }
+
+  .logo {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+  }
+
+  .collapseButton {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  
+.toggleButton {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: auto;
+  }
+}

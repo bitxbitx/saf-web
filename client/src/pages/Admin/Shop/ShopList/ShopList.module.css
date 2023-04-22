@@ -1,0 +1,20 @@
+.nothingFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    opacity: 0.8;
+    user-select: none;
+  pointer-events: none;
+}
+
+.nothingFound img {
+    max-width: 500px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    width: 100%;
+}

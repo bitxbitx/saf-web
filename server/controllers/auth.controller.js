@@ -13,8 +13,9 @@ const { signAccessToken, signRefreshToken } = require('../config/jwtHelper');
  * @returns {Object} The user object with a JWT token.
  */
 const login = asyncHandler(async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { usernameEmailOrPhoneNumber, password } = req.body;
+    
+    const user = await User.findOne({ $or : [{ username: usernameEmailOrPhoneNumber }, { email: usernameEmailOrPhoneNumber }, { phoneNumber: usernameEmailOrPhoneNumber }]  });
 
     if (!user) {
         res.status(400).json({ error: 'User not found' });
@@ -24,11 +25,12 @@ const login = asyncHandler(async (req, res) => {
             res.status(400).json({ error: 'Invalid username or password' });
         } else {
             // Generate access token and refresh token and set it to httponly cookie
-            const accessToken = signAccessToken(user._id);
-            const refreshToken = signRefreshToken(user._id);
-            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000,});
-            res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000, });
-            res.json({ user, token });
+            const accessToken = await signAccessToken(user._id.toString());
+            const refreshToken = await signRefreshToken(user._id.toString());
+
+            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path:'/'})
+            .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000, path:'/'})
+            .json({ user, accessToken });
             return;
         }
     }
@@ -41,9 +43,19 @@ const login = asyncHandler(async (req, res) => {
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  * @returns {Object} The created user object.
+ * 
+ * Example request body:
+ * {
+ *  "name": "John Doe",
+ * "email": "stanley121499@gmail.com",
+ * "password": "password",
+ * "role": "user",
+ * "username": "johndoe",
+ * "phoneNumber": "1234567890"
+ * }
  */
 const register = asyncHandler(async (req, res) => {
-    const { name, email, password, role, username } = req.body;
+    const { name, email, password, role, username, phoneNumber } = req.body;
 
     // Check if user already exists
     const userFound = await User.find({ username });
@@ -52,7 +64,7 @@ const register = asyncHandler(async (req, res) => {
         return;
     }
 
-    const user = new User({ name, email, password, role, username });
+    const user = new User({ name, email, password, role, username, phoneNumber });
     await user.save();
 
     // Generate access token and refresh token and set it to httponly cookie
@@ -60,7 +72,7 @@ const register = asyncHandler(async (req, res) => {
     const refreshToken = signRefreshToken(user._id);
     res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000,});
     res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000,});
-    res.json({ user, token });
+    res.json({ user, accessToken });
 });
 
 /**
@@ -176,7 +188,7 @@ const getMe = asyncHandler(async (req, res) => {
 });
 
 const updateDetails = asyncHandler(async (req, res) => {    
-    const user = await User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    const user = await User.findOneAndUpdate({_id: req.userId }, req.body, {new: true})
     if (!user) {
         res.status(404).json({ error: 'User not found' });
     } else {

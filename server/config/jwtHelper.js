@@ -2,16 +2,13 @@ const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 require('dotenv').config();
 
-// TODO: Think about should we add payload to signAccessToken and signRefreshToken
-
 const signAccessToken = (userId) => {
     return new Promise((resolve, reject) => {
         const payload = { userId };
         const secret = process.env.ACCESS_TOKEN_SECRET;
         const options = {
-            expiresIn: '15m',
+            expiresIn: process.env.ACCESS_TOKEN_LIFE,
             issuer: process.env.ISS,
-            audience: userId,
         };
         jwt.sign(payload, secret, options, (err, token) => {
             if (err) {
@@ -29,9 +26,8 @@ const signRefreshToken = (userId) => {
         const payload = { userId };
         const secret = process.env.REFRESH_TOKEN_SECRET;
         const options = {
-            expiresIn: '30d',
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
             issuer: process.env.ISS,
-            audience: userId,
         };
         jwt.sign(payload, secret, options, (err, token) => {
             if (err) {
