@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 const protect = async (req, res, next) => {
-  const token = req.cookies.accessToken;
+  const authHeader = req.headers.authorization;
+  const tokenHeader = authHeader?.split(' ')[1];
+  const token = tokenHeader || req.cookies.accessToken;
+
   if (!token) {
     return res.status(401).json({ error: 'Not authorized, no token' });
   }

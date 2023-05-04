@@ -30,7 +30,7 @@ const login = asyncHandler(async (req, res) => {
 
             res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path:'/'})
             .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000, path:'/'})
-            .json({ user, accessToken });
+            .json({ user, accessToken,refreshToken });
             return;
         }
     }
@@ -72,7 +72,7 @@ const register = asyncHandler(async (req, res) => {
     const refreshToken = signRefreshToken(user._id);
     res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000,});
     res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000,});
-    res.json({ user, accessToken });
+    res.json({ user, accessToken, refreshToken });
 });
 
 /**

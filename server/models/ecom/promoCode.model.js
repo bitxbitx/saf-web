@@ -52,7 +52,6 @@ promoCodeSchema.virtual('numberOfUses', {
 promoCodeSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'productCategory',
-        select: 'name'
     }).populate({
         path: 'numberOfUses',
     })

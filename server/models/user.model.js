@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ['admin', 'user', 'customer'],
+            enum: ['Admin', 'User', 'Customer', 'Manager', 'Staff', 'Delivery', 'Driver', 'Rider', 'Sales', 'Marketing', 'Finance', 'Accounting', 'HR', 'IT', 'Support', 'Guest'],
             default: 'user'
         },
         dob: Date,
@@ -80,7 +80,7 @@ userSchema.virtual('cart', {
     localField: '_id',
     foreignField: 'user',
     justOne: false,
-})
+})  
 
 userSchema.virtual('wishList', {
     ref: 'Wishlist',

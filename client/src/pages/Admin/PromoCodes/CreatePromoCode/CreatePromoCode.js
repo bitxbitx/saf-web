@@ -26,7 +26,6 @@ export default function CreatePromoCode() {
 
     const handleSubmit = async (values) => {
         const payload = { ...values }
-        console.log("data", payload)
 
         createPromoCode(payload).unwrap().then(() => {
             setSuccess(true);

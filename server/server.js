@@ -59,7 +59,7 @@ app.use('/api/orders', require('./routes/ecom/order.routes'))
 app.use('/api/products', require('./routes/ecom/product.routes'))
 app.use('/api/product-variants', require('./routes/ecom/productVariant.routes'))
 app.use('/api/product-categories', require('./routes/ecom/productCategory.routes'))
-app.use('/api/promoCodes', require('./routes/ecom/promoCode.routes'))
+app.use('/api/promo-codes', require('./routes/ecom/promoCode.routes'))
 app.use('/api/shop-location', require('./routes/ecom/shopLocation.routes'))
 app.use('/api/wishlist', require('./routes/ecom/wishlist.routes'))
 
