@@ -44,7 +44,7 @@ export default function InfoCard({ title, properties, image, editFunc, deleteFun
   return (
     <div className={styles.container}>
       <div className={styles.image}>
-        {image && image !=="null" ? <img src={'http://localhost:8000/'+ image} alt={title} /> : <Avatar {...stringAvatar(title)} />}
+        {image && image !=="null" ? <img src={image} alt={title} /> : <Avatar {...stringAvatar(title)} />}
       </div>
       <div className={styles.content}>
         <Typography variant="h6" component="div" > {title} </Typography>

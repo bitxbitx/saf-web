@@ -20,7 +20,7 @@ export default function LiveChat() {
     useEffect(() => {
         // Create a new socket connection when the component mounts
         const newSocket = io('http://localhost:8000', {
-            // path: '/api/live-chat',
+            path: '/api/live-chat',
             transports: ['websocket'],
             timeout: 10000,
         });

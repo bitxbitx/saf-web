@@ -8,7 +8,9 @@ module.exports = (server) => {
   const clients = {};
 
   // Create a new instance of the Socket.io server
-  const io = socketIO(server);
+  const io = socketIO(server,{
+    path: '/api/live-chat',
+  });
 
   // TODO : ADD ERROR HANDLING
 
