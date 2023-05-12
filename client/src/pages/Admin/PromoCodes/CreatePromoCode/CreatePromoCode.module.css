@@ -5,3 +5,9 @@
     margin:auto;
     max-width: 500px;
 }
+
+.productCategories {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }

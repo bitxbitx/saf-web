@@ -26,14 +26,22 @@ export default function CreateProduct() {
     const handleSubmit = async (values) => {
         try {
             const { variants, ...rest } = values;
-            createProduct(rest).unwrap().then((res) => {
+            const newAttributes = {};
+            attributes.forEach((attribute) => {
+                newAttributes[attribute.name] = attribute.value;
+            });
+            createProduct({attributes:newAttributes, ...rest}).unwrap().then((res) => {
                 const { _id } = res.product;
                 variants.forEach(async (variant) => {
-                    const { data } = await createProductVariant({ product: _id, ...variant }).unwrap();
+                    console.log("variant", variant)
+                    console.log("{product: _id, ...variant}", { product: _id, ...variant })
+                    const { data } = await createProductVariant({ product: _id, ...variant, stock:23 }).unwrap();
                 });
 
-                // setSuccess(true);
-                // history.push("/admin/products");
+                setSuccess(true);
+                setTimeout(() => {
+                    history.push('/admin/products');
+                }, 2000);
             })
         }
         catch (error) {
@@ -59,7 +67,12 @@ export default function CreateProduct() {
                     description: "TEST PRODUCT DESCRIPTION",
                     image: null,
                     productCategory: [],
-                    productDetail: "TEST PRODUCT DETAIL",
+                    // productDetail: "TEST PRODUCT DETAIL",
+                    sku: "TEST SKU",
+                    stock: 100,
+                    price: 100,
+                    quantity: 100,
+                    status: "active",
                     variants: []
                 }}
                 // validationSchema={productSchema}
@@ -89,7 +102,7 @@ export default function CreateProduct() {
                             error={touched.description && Boolean(errors.description)}
                             className={styles.input}
                         />
-                        <TextField
+                        {/* <TextField
                             id="productDetail"
                             name="productDetail"
                             label="Product Detail"
@@ -99,7 +112,58 @@ export default function CreateProduct() {
                             onBlur={handleBlur}
                             error={touched.productDetail && Boolean(errors.productDetail)}
                             className={styles.input}
+                        /> */}
+                        <TextField
+                            id="stock"
+                            name="stock"
+                            label="Stock (Optional)"
+                            variant="standard"
+                            value={values.stock}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.stock && Boolean(errors.stock)}
+                            className={styles.input}
                         />
+                        <TextField
+                            id="price"
+                            name="price"
+                            label="Price (Optional)"
+                            variant="standard"
+                            value={values.price}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.price && Boolean(errors.price)}
+                            className={styles.input}
+                        />
+                        <TextField
+                            id="sku"
+                            name="sku"
+                            label="SKU (Optional)"
+                            variant="standard"
+                            value={values.sku}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.sku && Boolean(errors.sku)}
+                            className={styles.input}
+                        />
+                        <FormControl variant="standard" sx={{ m: 0, minWidth: 120 }} className={styles.productStatus}>
+                            <InputLabel id="status">Status</InputLabel>
+                            <Select
+                                labelId="status"
+                                id="status"
+                                name="status"
+                                value={values.status}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.status && Boolean(errors.status)}
+                                label="Status"
+                            >
+                                <MenuItem value="active">Active</MenuItem>
+                                <MenuItem value="inactive">Inactive</MenuItem>
+                                <MenuItem value="archived">Archived</MenuItem>
+                            </Select>
+                        </FormControl>
+
                         <FormLabel>Product Category</FormLabel>
                         <FormControl variant="standard" sx={{ m: 0, minWidth: 120 }} className={styles.productCategories}>
                             {productCategories?.productCategories?.map((option) => (
@@ -151,7 +215,10 @@ export default function CreateProduct() {
 
                         <div>
                             <div className={styles.topbar}>
-                                <Typography variant="h6">Attributes</Typography>
+                                <div>
+                                    <Typography variant="h6">Attributes</Typography>
+                                    <Typography variant="caption">Add attributes to your product in the format M|X|L</Typography>
+                                </div>
                                 <Button variant="contained" onClick={() => setAttributes([...attributes, { name: "", value: "" }])}>Add Attribute</Button>
 
                             </div>
@@ -259,8 +326,8 @@ export default function CreateProduct() {
                                 const variantsCombination = combinations.map(combination => {
                                     return {
                                         sku: "",
-                                        price: "",
-                                        inventoryStock: "",
+                                        price: 0,
+                                        stock: 0,
                                         image: null,
                                         attributes: combination,
                                     }
@@ -275,11 +342,15 @@ export default function CreateProduct() {
                         <Typography variant="h6" className={styles.title}> Variants </Typography>
                         {values.variants.map((variant, index) => (
                             <div key={index} className={styles.variant}>
-                                {Object.keys(variant.attributes).map((key, index) => (
-                                    <div key={index} className={styles.attribute}>
-                                        {key}: {variant.attributes[key]}
-                                    </div>
-                                ))}
+                                <Typography variant="h6" className={styles.title}> Variant {index + 1} </Typography>
+                                <Typography variant="body1" className={styles.attributeLine}>
+                                    {Object.keys(variant.attributes).map((key, index) => (
+                                        <span key={index}>
+                                            {`${key}: ${variant.attributes[key]}`}
+                                            {index !== Object.keys(variant.attributes).length - 1 ? ', ' : ''}
+                                        </span>
+                                    ))}
+                                </Typography>
                                 <TextField
                                     id="sku"
                                     name="sku"
@@ -308,14 +379,14 @@ export default function CreateProduct() {
                                     typee="number"
                                 />
                                 <TextField
-                                    id="inventoryStock"
-                                    name="inventoryStock"
-                                    label="Inventory Stock"
+                                    id="stock"
+                                    name="stock"
+                                    label="Stock"
                                     variant="standard"
-                                    value={variant.inventoryStock}
+                                    value={variant.stock}
                                     onChange={(e) => {
                                         const newVariants = [...values.variants];
-                                        newVariants[index].inventoryStock = e.target.value;
+                                        newVariants[index].stock = e.target.value;
                                         setFieldValue("variants", newVariants);
                                     }}
                                     className={styles.input}

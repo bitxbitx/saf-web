@@ -120,7 +120,7 @@ export default function CreatePromoCode() {
                             </FormControl>
                             {/* Create a MUI checkbox for product category */}
                             <FormLabel>Product Category</FormLabel>
-                            <FormControl variant="standard" sx={{ m: 0, minWidth: 120, flexDirection: 'row' }}>
+                            <FormControl variant="standard" sx={{ m: 0, minWidth: 120, flexDirection: 'row' }} className={styles.productCategories}>
                                 {data?.productCategories?.map((option) => (
                                     <Field key={option._id} name="productCategory">
                                         {({ field }) => (

@@ -7,6 +7,7 @@ const productSchema = mongoose.Schema(
             required: [true, 'Please add a name value'],
         },
         description: String,
+        // TODO: Make it an array of strings
         image: {
             type: String,
         },
@@ -14,11 +15,39 @@ const productSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ProductCategory',
         }],
-        attributes: [String],
-        productDetails : [String],
+        // Example of attributes
+        // attributes: {
+        //   color: 'red|blue|green',
+        //   size: 'M|L|XL',
+        // }
+        attributes: {
+            type: Map,
+            of: String,
+        },
+        productDetails: [String],
+        status: {
+            type: String,
+            enum: ['active', 'archived', 'closed'],
+            default: 'active',
+        },
+        sku: {
+            type: String,
+            default: '',
+        },
+        price: {
+            type: Number,
+            default: 0,
+        },
+        stock: {
+            type: Number,
+            default: 0,
+        },
+
     },
     {
         timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     }
 );
 
@@ -69,14 +98,6 @@ productSchema.virtual('wishlistCount', {
             $gte: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
         },
     },
-});
-
-productSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'productVariant',
-    })
-
-    next();
 });
 
 module.exports = mongoose.model('Product', productSchema);

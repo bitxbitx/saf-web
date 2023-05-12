@@ -1,0 +1,23 @@
+.productCategories {
+  display: flex !important;
+  flex-wrap: wrap;
+  flex-direction: row !important;
+  margin-bottom: 1rem !important;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 768px) {
+  .results {
+    grid-template-columns: repeat(2, 1fr);
+  }  
+}
+
+@media screen and (max-width: 480px) {
+  .results {
+    grid-template-columns: repeat(1, 1fr);
+  }   
+}

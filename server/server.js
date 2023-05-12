@@ -6,17 +6,19 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const port = process.env.PORT || 8000
+const socketServer = require('./socketServer'); // Import the Socket.io server
 
-connectDB()
+const port = process.env.PORT || 8000;
 
-const app = express()
+connectDB();
+
+const app = express();
 
 // Morgan
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
 // Cookie Parser
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Cors
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:8000']; // add any other origins that you want to allow
@@ -41,31 +43,36 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Middleware
-app.use(errorHandler)
+app.use(errorHandler);
 
 // Common Routes
-app.use('/api/users', require('./routes/user.routes'))
-app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 
 // Social Routes
-app.use('/api/shares', require('./routes/social/share.routes'))
-app.use('/api/likes', require('./routes/social/like.routes'))
-app.use('/api/comments', require('./routes/social/comment.routes'))
-app.use('/api/posts', require('./routes/social/post.routes'))
+app.use('/api/shares', require('./routes/social/share.routes'));
+app.use('/api/likes', require('./routes/social/like.routes'));
+app.use('/api/comments', require('./routes/social/comment.routes'));
+app.use('/api/posts', require('./routes/social/post.routes'));
 
 // Ecommerce Routes
-app.use('/api/add-to-cart', require('./routes/ecom/addToCart.routes'))
-app.use('/api/orders', require('./routes/ecom/order.routes'))
-app.use('/api/products', require('./routes/ecom/product.routes'))
-app.use('/api/product-variants', require('./routes/ecom/productVariant.routes'))
-app.use('/api/product-categories', require('./routes/ecom/productCategory.routes'))
-app.use('/api/promo-codes', require('./routes/ecom/promoCode.routes'))
-app.use('/api/shop-location', require('./routes/ecom/shopLocation.routes'))
-app.use('/api/wishlist', require('./routes/ecom/wishlist.routes'))
+app.use('/api/add-to-cart', require('./routes/ecom/addToCart.routes'));
+app.use('/api/orders', require('./routes/ecom/order.routes'));
+app.use('/api/products', require('./routes/ecom/product.routes'));
+app.use('/api/product-variants', require('./routes/ecom/productVariant.routes'));
+app.use('/api/product-categories', require('./routes/ecom/productCategory.routes'));
+app.use('/api/promo-codes', require('./routes/ecom/promoCode.routes'));
+app.use('/api/shop-location', require('./routes/ecom/shopLocation.routes'));
+app.use('/api/wishlist', require('./routes/ecom/wishlist.routes'));
+
+// Statistics Routes
+app.use('/api/statistics', require('./routes/statistics/statistics.routes'));
 
 // Fetch Image
-app.use('/uploads', express.static('uploads'))
-  
+app.use('/uploads', express.static('uploads'));
 
+// Start the server
+const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
-app.listen(port, () => console.log(`Server started on port ${port}`))
+// Start the Socket.io server
+socketServer(server);

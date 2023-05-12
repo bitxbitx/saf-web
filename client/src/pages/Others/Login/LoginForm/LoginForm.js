@@ -10,7 +10,7 @@ import { Alert, Snackbar } from "@mui/material";
 
 const LoginForm = (props) => {
   const initialValues = {
-    usernameEmailOrPhoneNumber: "johndoe22",
+    usernameEmailOrPhoneNumber: "rbeever2f",
     password: "password",
   };
 
@@ -25,7 +25,7 @@ const LoginForm = (props) => {
 
   const onSubmit = (values) => {
     login(values).then((res) => {
-      if (res.data.user) {
+      if (res.data?.user) {
         setSuccess(true);
         history.push("/admin");
       }
@@ -47,7 +47,7 @@ const LoginForm = (props) => {
     <>
       {error && <Snackbar open={true} autoHideDuration={6000}>
         <Alert severity="error">
-          {error.data.error}
+          {error.data.message}
         </Alert>
       </Snackbar>}
 

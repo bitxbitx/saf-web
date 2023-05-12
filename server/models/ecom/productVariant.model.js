@@ -16,7 +16,7 @@ const productVariantSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
-        inventoryStock: {
+        stock: {
             type: Number,
             required: true,
         },
@@ -29,47 +29,65 @@ const productVariantSchema = mongoose.Schema(
     },
     {
         timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     }
 );
-
-// productVariantSchema.pre(/^find/, function (next) {
-//     this.populate({
-//         path: 'product',
-//         select: '-productVariant'
-//     });
-//     next();
-// });
 
 productVariantSchema.virtual('addToCartCount', {
     ref: 'AddToCart',
     localField: '_id',
     foreignField: 'productVariant',
     count: true,
-    match: {
-        createdAt: {
-            $gte: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
-        },
-    },
 });
 
 
-productVariantSchema.virtual('totalSales', {
+productVariantSchema.virtual('completedOrders', {
     ref: 'Order',
     localField: '_id',
     foreignField: 'orderItems',
     justOne: false,
     match: { status: 'completed' },
     options: { sort: { createdAt: -1 } },
+  });
+
+productVariantSchema.virtual('wishlistCount', {
+    ref: 'Wishlist',
+    localField: '_id',
+    foreignField: 'productVariant',
+    count: true,
+});
+
+
+productVariantSchema.virtual('sales').get(function () {
     // Calculate the total sales of this product variant
     // by iterating over each order item and adding up the
-    // price of the item if it matches this product variant
-    get: function () {
-      return this.orderItems.reduce((total, orderItem) => {
+    // quantity of the item if it matches this product variant
+    if (!this.completedOrders) {
+        return 0;
+    }
+    return this.completedOrders.reduce((total, orderItem) => {
         if (orderItem.productVariant.equals(this._id)) {
-          return total + orderItem.price;
+            return total + orderItem.quantity;
         }
         return total;
-      }, 0);
-    },
-  });
+    }, 0);
+});
+
+productVariantSchema.virtual('quantitySold').get(function () {
+    // Calculate the total sales of this product variant
+    // by iterating over each order item and adding up the
+    // quantity of the item if it matches this product variant
+    if (!this.completedOrders) {
+        return 0;
+    }
+    return this.completedOrders.reduce((total, orderItem) => {
+        if (orderItem.productVariant.equals(this._id)) {
+            return total + orderItem.quantity;
+        }
+        return total;
+    }, 0);
+});
+
+
 module.exports = mongoose.model('ProductVariant', productVariantSchema);

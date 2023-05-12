@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const getUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
@@ -10,7 +11,17 @@ const getUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
     try {
         if (req.file) { req.body.image = req.file.path }
+        
+        // Hash password if it was sent in request body
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt(12)
+            const hash = await bcrypt.hash(req.body.password, salt)
+            console.log("Hashing password...")
+            req.body.password = hash
+        }
+
         const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })                
+        console.log(user)
         res.json({ user });
     } catch (error) {
         // Check if the error is a validation error

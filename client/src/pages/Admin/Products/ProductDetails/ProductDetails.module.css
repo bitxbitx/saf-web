@@ -26,3 +26,35 @@
     object-fit: cover;
     border-radius: 10px;
 }
+
+.variant{
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    background-color: #151E24;
+    flex-direction: column;
+}
+
+.attribute{
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #151E24;
+    box-sizing: border-box;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin: 1rem 0;
+}
+
+.productCategories {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

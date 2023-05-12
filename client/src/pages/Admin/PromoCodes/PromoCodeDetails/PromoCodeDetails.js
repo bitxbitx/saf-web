@@ -117,7 +117,7 @@ export default function PromoCodeDetails() {
                             </FormControl>
 
                             <FormLabel>Product Category</FormLabel>
-                            <FormControl variant="standard" sx={{ m: 0, minWidth: 120, flexDirection: 'row' }}>
+                            <FormControl variant="standard" sx={{ m: 0, minWidth: 120, flexDirection: 'row' }} className={styles.productCategories}>
                                 {productCategories?.productCategories?.map((option) => (
                                     <Field key={option._id} name="productCategory">
                                         {({ field }) => (

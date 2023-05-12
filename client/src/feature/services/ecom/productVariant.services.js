@@ -20,14 +20,15 @@ export const productVariantApi = createApi({
                 const formData = new FormData();
                 formData.append('product', body.product);
                 formData.append('price', body.price);
-                formData.append('inventoryStock', body.inventoryStock);
+                formData.append('stock', body.stock);
                 formData.append('image', body.image);
                 formData.append('sku', body.sku);
+                
 
                 // Change json to string for attributes
                 formData.append('attributes', JSON.stringify(body.attributes));
                 return {
-                    url: `/${body}`,
+                    url: `/${body.id}`,
                     method: 'PUT',
                     body: formData,
                 };
@@ -46,7 +47,7 @@ export const productVariantApi = createApi({
                 const formData = new FormData();
                 formData.append('product', body.product);
                 formData.append('price', body.price);
-                formData.append('inventoryStock', body.inventoryStock);
+                formData.append('stock', body.stock);
                 formData.append('image', body.image);
                 formData.append('sku', body.sku);
 

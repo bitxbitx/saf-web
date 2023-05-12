@@ -33,10 +33,10 @@ export default function CustomerAccountList() {
             {/* Content */}
             {!isLoading && data?.users?.length > 0 && <div className={styles.container}>
                 <div className={styles.row}>
-                    {data.users.filter((el)=> {return el.role ==='customer'}).map((user) => (
+                    {data.users.filter((el)=> {return el.role ==='Customer'}).map((user) => (
                         <InfoCard
                             key={user._id}
-                            title={user.username}
+                            title={user.name}
                             properties={{ "Email": user.email, "Role": user.role }}
                             image={user.image}
                             imageAlt={user.username}

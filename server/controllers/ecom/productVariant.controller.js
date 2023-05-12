@@ -25,6 +25,10 @@ const getProductVariant = asyncHandler(async (req, res) => {
 
 const updateProductVariant = asyncHandler(async (req, res) => {
     if (req.file) { req.body.image = req.file.path }
+    
+    // Change string to json for attributes
+    req.body.attributes = JSON.parse(req.body.attributes);
+
     const productVariant = await ProductVariant.findByIdAndUpdate(
         req.params.id,
         req.body,

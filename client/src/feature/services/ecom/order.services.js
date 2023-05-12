@@ -41,5 +41,4 @@ export const orderApi = createApi({
 
 // orderApi.middleware.push(authMiddleware);
 
-
 export const { useGetOrdersQuery, useGetOrderQuery, useUpdateOrderMutation, useDeleteOrderMutation, useCreateOrderMutation } = orderApi;

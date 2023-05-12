@@ -4,7 +4,7 @@ import { authMiddleware } from '../../middleware/api.middleware';
 
 export const promoCodeApi = createApi({
     reducerPath: 'promoCodeApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/promoCodes', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/promo-codes', credentials: 'include' }),
     tagTypes: ['PromoCode'],
     endpoints: (builder) => ({
         getPromoCodes: builder.query({

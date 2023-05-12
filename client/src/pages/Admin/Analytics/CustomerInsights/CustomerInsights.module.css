@@ -1,0 +1,25 @@
+.chart{
+  background-color: #14191C;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  /* flex-wrap: wrap; */
+  margin: 0 -1rem;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: row;
+}
+
+.column{
+  flex: 20%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}

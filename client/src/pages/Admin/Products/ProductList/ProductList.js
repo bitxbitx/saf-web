@@ -18,6 +18,8 @@ export default function ProductList() {
         deleteProduct(id);
     }
 
+    console.log("error", error);
+
     return (
         <>
             {/* Loading */}

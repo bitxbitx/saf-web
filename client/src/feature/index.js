@@ -13,6 +13,9 @@ import { shopLocationApi } from "./services/ecom/shopLocation.services";
 import { wishlistApi } from "./services/ecom/wishlist.services";
 import { productVariantApi } from "./services/ecom/productVariant.services";
 
+// Statistics
+import { statisticsApi } from "./services/statistics/statistics.services";
+
 // Middleware
 import apiMiddleware from "./middleware/api.middleware";
 
@@ -31,6 +34,9 @@ const store = configureStore({
         [wishlistApi.reducerPath]: wishlistApi.reducer,
         [productVariantApi.reducerPath]: productVariantApi.reducer,
 
+        // Statistics
+        [statisticsApi.reducerPath]: statisticsApi.reducer,
+
 
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -47,10 +53,14 @@ const store = configureStore({
         wishlistApi.middleware,
         productVariantApi.middleware,
 
+        // Statistics
+        statisticsApi.middleware,
+        
         // Middleware
         apiMiddleware(productApi),
-        apiMiddleware(productCategoryApi)
+        apiMiddleware(productCategoryApi),
 
+        
     )
 });
 
