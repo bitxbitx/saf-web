@@ -23,7 +23,7 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "server": "nodemon server/server.js"
   },
   "name": "server",
