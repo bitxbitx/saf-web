@@ -23,12 +23,12 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server/server.js"
+    "start": "node api/index.js",
+    "server": "nodemon server/api/index.js"
   },
   "name": "server",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "api/index.js",
   "author": "",
   "license": "ISC",
   "description": ""
