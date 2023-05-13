@@ -1,0 +1,10 @@
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .sentMessage {
+    margin-left: auto;
+  }
+  

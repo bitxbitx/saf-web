@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const productVariantApi = createApi({
     reducerPath: 'productVariantApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/product-variants', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/product-variants', credentials: 'include' }),
     tagTypes: ['ProductVariant'],
     endpoints: (builder) => ({
         getProductVariants: builder.query({
@@ -20,14 +21,15 @@ export const productVariantApi = createApi({
                 const formData = new FormData();
                 formData.append('product', body.product);
                 formData.append('price', body.price);
-                formData.append('inventoryStock', body.inventoryStock);
+                formData.append('stock', body.stock);
                 formData.append('image', body.image);
                 formData.append('sku', body.sku);
+                
 
                 // Change json to string for attributes
                 formData.append('attributes', JSON.stringify(body.attributes));
                 return {
-                    url: `/${body}`,
+                    url: `/${body.id}`,
                     method: 'PUT',
                     body: formData,
                 };
@@ -46,7 +48,7 @@ export const productVariantApi = createApi({
                 const formData = new FormData();
                 formData.append('product', body.product);
                 formData.append('price', body.price);
-                formData.append('inventoryStock', body.inventoryStock);
+                formData.append('stock', body.stock);
                 formData.append('image', body.image);
                 formData.append('sku', body.sku);
 

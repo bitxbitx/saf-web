@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .text {
+    margin-left: 0.5rem;
+  }
+  

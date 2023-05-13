@@ -1,9 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+require('dotenv').config();
 
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/users', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/users', credentials: 'include' }),
     tagTypes: ['User'],
     endpoints: (builder) => ({
         getUsers: builder.query({

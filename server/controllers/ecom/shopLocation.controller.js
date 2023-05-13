@@ -18,7 +18,8 @@ const getShopLocation = asyncHandler(async (req, res) => {
 });
 
 const updateShopLocation = asyncHandler(async (req, res) => {
-    const shopLocation = await ShopLocation.findOneAndUpdate({ _id: req.params.id }, req.body.payload, { new: true });
+    const shopLocation = await ShopLocation.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    console.log(shopLocation)
     res.json({ shopLocation });
 });
 

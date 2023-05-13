@@ -17,13 +17,13 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({}).populate('productVariant');
+    const products = await Product.find({}).populate('productVariant').populate('productCategory');
     console.log(products)
     res.json({ products });
 });
 
 const getProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('productVariant').populate('productCategory');
     res.json({ product });
 });
 

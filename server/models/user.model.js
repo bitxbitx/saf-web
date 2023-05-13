@@ -28,7 +28,10 @@ const userSchema = mongoose.Schema(
             default: 'user'
         },
         dob: Date,
-        ethnicity: String,
+        ethnicity: {
+            type: String,
+            enum: ['Malay', 'Chinese', 'Indian', 'Others'],
+        },
         phoneNumber: {
             type: String,
             required: [true, 'Please add a phoneNumber value'],
@@ -49,22 +52,27 @@ const userSchema = mongoose.Schema(
     },
     {
         timestamps: true,
+        virtuals: true,
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true },
     }
-)        
+)
 
-// Encrypts Password (Bcrypt)
-userSchema.pre("save", async function (next) {
-    try {
-        if (this.isModified("password")) {
-            const salt = await bcrypt.genSalt(12)
-            const hash = await bcrypt.hash(this.password, salt)
-            this.password = hash
-        }
-        next()
-    } catch (error) {
-        next(error)
-    }
-})
+// // Encrypts Password (Bcrypt)
+// userSchema.pre("save", async function (next) {
+//     console.log("Saving user...")
+//     try {
+//         if (this.isModified("password")) {
+//             const salt = await bcrypt.genSalt(12)
+//             const hash = await bcrypt.hash(this.password, salt)
+//             console.log("Hashing password...")
+//             this.password = hash
+//         }
+//         next()
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
 userSchema.methods.comparePassword = async function (password) {
     try {
@@ -80,7 +88,7 @@ userSchema.virtual('cart', {
     localField: '_id',
     foreignField: 'user',
     justOne: false,
-})  
+})
 
 userSchema.virtual('wishList', {
     ref: 'Wishlist',
@@ -101,15 +109,23 @@ userSchema.virtual('age').get(function () {
 })
 
 userSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'cart',
-        select: '-user',
-    }).populate({
-        path: 'wishList',
-        select: '-user',
-    })
+    // this.populate({
+    //     path: 'cart',
+    //     select: '-user',
+    // }).populate({
+    //     path: 'wishList',
+    //     select: '-user',
+    // }).populate({
+    //     path: 'age',
+    // })
+    if (this.dob) {
+        this.age = this.get('age');
+    }
+
     next()
 })
 
 
-module.exports = mongoose.model('Admin', userSchema)
+
+
+module.exports = mongoose.model('User', userSchema)

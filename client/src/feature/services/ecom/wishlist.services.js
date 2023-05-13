@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const wishlistApi = createApi({
     reducerPath: 'wishlistApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/wishlists', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/wishlists', credentials: 'include' }),
     tagTypes: ['Wishlist'],
     endpoints: (builder) => ({
         getWishlists: builder.query({

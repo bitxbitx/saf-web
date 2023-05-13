@@ -1,0 +1,59 @@
+.sidebar {
+  height: 100%;
+  width: 100%;
+  background-color: #121212;
+  border-right: 1px solid #ddd;
+  overflow-y: scroll;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
+.chatSession {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 100%;
+}
+
+.chatSessionHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.chatSessionHeader span:first-child {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.chatSessionHeader span:last-child {
+  color: #8f8f8f;
+  font-size: 12px;
+}
+
+.chatSessionLastMessage {
+  display: flex;
+  align-items: center;
+}
+
+.chatSessionLastMessage span:first-child {
+  margin-right: 8px;
+  color: #8f8f8f;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 24px);
+}
+
+.MuiBadge-standard {
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #25d366;
+  color: #fff;
+}

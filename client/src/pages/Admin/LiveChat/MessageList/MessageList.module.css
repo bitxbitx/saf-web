@@ -1,0 +1,38 @@
+.messageList {
+  padding: 0px;
+  overflow: auto;
+  height: 100%;
+}
+
+.messageItem {
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.sentMessage .receivedChatBubble {
+  display: none;
+}
+
+.receivedMessage .sentChatBubble {
+  display: none;
+}
+
+.chatBubble {
+  background-color: #121212;
+  border-radius: 16px;
+  padding: 8px 16px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.sentChatBubble {
+  background-color: #8BD5F899;
+  align-self: flex-end;
+}
+
+.receivedChatBubble {
+  background-color: #8BD5F84D;
+  align-self: flex-start;
+}

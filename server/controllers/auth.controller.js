@@ -14,6 +14,8 @@ const { signAccessToken, signRefreshToken } = require('../config/jwtHelper');
  */
 const login = asyncHandler(async (req, res) => {
     const { usernameEmailOrPhoneNumber, password } = req.body;
+    console.log(usernameEmailOrPhoneNumber);
+    console.log(password);
     
     const user = await User.findOne({ $or : [{ username: usernameEmailOrPhoneNumber }, { email: usernameEmailOrPhoneNumber }, { phoneNumber: usernameEmailOrPhoneNumber }]  });
 
@@ -29,7 +31,7 @@ const login = asyncHandler(async (req, res) => {
             const refreshToken = await signRefreshToken(user._id.toString());
 
             res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path:'/'})
-            .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15 * 60 * 1000, path:'/'})
+            .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 24 * 60 * 1000, path:'/'})
             .json({ user, accessToken,refreshToken });
             return;
         }
@@ -149,7 +151,12 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const refreshTokens = asyncHandler(async (req, res) => {
-    const { refreshToken } = req.body;
+    const authHeader = req.headers.authorization;
+    const refreshTokenHeader = authHeader && authHeader.split(' ')[1];
+    console.log(refreshTokenHeader);
+    const refreshToken = refreshTokenHeader || req.body.refreshToken;
+    console.log("refreshToken", refreshToken);
+
     if (!refreshToken) {
         return res.status(401).json({ message: 'Refresh token missing' });
     }
@@ -183,6 +190,7 @@ const getMe = asyncHandler(async (req, res) => {
     if (!user) {
         res.status(404).json({ error: 'User not found' });
     } else {
+        console.log(user);
         res.json({ user });
     }
 });

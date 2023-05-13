@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const productCategoryApi = createApi({
     reducerPath: 'productCategoryApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/product-categories', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/product-categories', credentials: 'include' }),
     tagTypes: ['ProductCategory'],
     endpoints: (builder) => ({
         getProductCategories: builder.query({

@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 // import { authMiddleware } from '../../middleware/auth.middleware';
+require('dotenv').config();
 
 export const orderApi = createApi({
     reducerPath: 'orderApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/orders', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/orders', credentials: 'include' }),
     tagTypes: ['Order'],
     endpoints: (builder) => ({
         getOrders: builder.query({
@@ -40,6 +41,5 @@ export const orderApi = createApi({
 });
 
 // orderApi.middleware.push(authMiddleware);
-
 
 export const { useGetOrdersQuery, useGetOrderQuery, useUpdateOrderMutation, useDeleteOrderMutation, useCreateOrderMutation } = orderApi;
