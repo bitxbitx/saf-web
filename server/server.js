@@ -71,13 +71,6 @@ app.use('/api/statistics', require('./routes/statistics/statistics.routes'));
 // Fetch Image
 app.use('/uploads', express.static('uploads'));
 
-
-// Temp
-app.get("/", (req, res) => {
-  res.send("Main page!");
-});
-
-
 // Start the server
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
