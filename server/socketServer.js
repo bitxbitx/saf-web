@@ -1,7 +1,7 @@
-const ChatMessage = require('../models/livechat/chatMessage.model');
-const ChatSession = require('../models/livechat/chatSession.model');
+const ChatMessage = require('./models/livechat/chatMessage.model');
+const ChatSession = require('./models/livechat/chatSession.model');
 const socketIO = require('socket.io');
-const User = require('../models/user.model');
+const User = require('./models/user.model');
 
 module.exports = (server) => {
   // saves all the connected clients
