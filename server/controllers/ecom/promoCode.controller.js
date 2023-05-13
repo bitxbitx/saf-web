@@ -19,7 +19,8 @@ const getPromoCode = asyncHandler(async (req, res) => {
 });
 
 const updatePromoCode = asyncHandler(async (req, res) => {
-    const promoCode = await PromoCode.findOneAndUpdate({ _id: req.params.id }, req.body.payload, { new: true });
+    
+    const promoCode = await PromoCode.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
     res.json({ promoCode });
 });
 

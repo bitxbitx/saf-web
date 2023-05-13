@@ -7,7 +7,7 @@ import LoadingIndicator from './LoadingIndicator/LoadingIndicator';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import styles from './LiveChat.module.css';
 import { useMeQuery } from '../../../feature/services/auth/auth.services';
-
+require('dotenv').config();
 
 export default function LiveChat() {
     const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +19,7 @@ export default function LiveChat() {
 
     useEffect(() => {
         // Create a new socket connection when the component mounts
-        const newSocket = io('http://localhost:8000', {
+        const newSocket = io(process.env.BACKEND_URL, {
             path: '/api/live-chat',
             transports: ['websocket'],
             timeout: 10000,

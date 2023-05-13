@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const productVariantApi = createApi({
     reducerPath: 'productVariantApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/product-variants', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/product-variants', credentials: 'include' }),
     tagTypes: ['ProductVariant'],
     endpoints: (builder) => ({
         getProductVariants: builder.query({

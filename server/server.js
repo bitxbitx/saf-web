@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 // Cors
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:8000']; // add any other origins that you want to allow
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:8000', 'ec2-52-77-227-200.ap-southeast-1.compute.amazonaws.com']; // add any other origins that you want to allow
 
 app.use(cors({
   origin: function(origin, callback) {

@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const shopLocationApi = createApi({
     reducerPath: 'shopLocationApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/shop-location', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/shop-location', credentials: 'include' }),
     tagTypes: ['ShopLocation'],
     endpoints: (builder) => ({
         getShopLocations: builder.query({

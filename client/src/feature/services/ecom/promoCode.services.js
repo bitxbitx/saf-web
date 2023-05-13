@@ -1,10 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { authMiddleware } from '../../middleware/api.middleware';
+require('dotenv').config();
 
 export const promoCodeApi = createApi({
     reducerPath: 'promoCodeApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/promo-codes', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/promo-codes', credentials: 'include' }),
     tagTypes: ['PromoCode'],
     endpoints: (builder) => ({
         getPromoCodes: builder.query({

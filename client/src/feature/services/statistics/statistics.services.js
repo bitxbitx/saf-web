@@ -1,9 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+require('dotenv').config();
 
 export const statisticsApi = createApi({
     reducerPath: 'statisticsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api/statistics', credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.BACKEND_URL + '/api/statistics', credentials: 'include' }),
     tagTypes: ['Statistics'],
     endpoints: (builder) => ({
         analyticsOverview: builder.query({
