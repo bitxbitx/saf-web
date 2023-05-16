@@ -21,20 +21,9 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 // Cors
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:8000', 'ec2-52-77-227-200.ap-southeast-1.compute.amazonaws.com']; // add any other origins that you want to allow
-
+// Cors
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-      return callback(new Error(msg), false);
-    }
-
-    return callback(null, true);
-  },
+  origin: '*',
   credentials: true // enable passing cookies from the client to the server
 }));
 
