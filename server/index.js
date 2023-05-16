@@ -21,9 +21,20 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 // Cors
-// Cors
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:8000', 'https://saf-web-client.vercel.app']; // add any other origins that you want to allow
+
 app.use(cors({
-  origin: '*',
+  origin: function(origin, callback) {
+    // allow requests with no origin
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+
+    return callback(null, true);
+  },
   credentials: true // enable passing cookies from the client to the server
 }));
 
