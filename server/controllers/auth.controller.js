@@ -30,8 +30,8 @@ const login = asyncHandler(async (req, res) => {
             const accessToken = await signAccessToken(user._id.toString());
             const refreshToken = await signRefreshToken(user._id.toString());
 
-            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path:'/'})
-            .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 24 * 60 * 1000, path:'/'})
+            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path:'/', domain: 'saf-web-client.vercel.app'})
+            .cookie('accessToken', accessToken, { httpOnly: true, maxAge: 24 * 60 * 1000, path:'/', domain: 'saf-web-client.vercel.app'})
             .json({ user, accessToken,refreshToken });
             return;
         }
